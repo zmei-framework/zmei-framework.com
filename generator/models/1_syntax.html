@@ -1,0 +1,383 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Overview &#8212; Zmei Generator 2.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+    <link rel="next" title="Field types" href="2_1_field_types.html" />
+    <link rel="prev" title="Models" href="../models.html" />
+  
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../blog/atom.xml" title="Zmei generator's blog">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="../models.html" title="Previous document">Models</a>
+        </li>
+        <li>
+          <a href="2_1_field_types.html" title="Next document">Field types</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="overview">
+<h1>Overview<a class="headerlink" href="#overview" title="Permalink to this headline">¶</a></h1>
+<p>Models are the cornerstone of the Zmei generator. Zmei automates all routine
+work with Django’s models.</p>
+<p>Here is an example of simple model:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#cat</span>
+<span class="o">--------</span>
+<span class="n">name</span>
+<span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<div class="section" id="header">
+<h2>Header<a class="headerlink" href="#header" title="Permalink to this headline">¶</a></h2>
+<p>“#cat” is the header part of the model.</p>
+<p>“#” is a marker that tells Zmei that it’s starting a model.
+“cat” is is the model name. The model name cannot contain spaces.
+The name should be written in lower-case letters.</p>
+<p>Examples of model names:</p>
+<ul class="simple">
+<li>my_fancy_model</li>
+<li>dog</li>
+<li>block1</li>
+</ul>
+<p>The header may also include a verbose name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#cat: Kitty</span>
+<span class="o">--------</span>
+<span class="n">name</span>
+<span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>And a verbose name plural:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#cat: Kitty/Kitties</span>
+<span class="o">--------</span>
+<span class="n">name</span>
+<span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>Another thing that may be placed in the header is a parent name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#animal-&gt;cat</span>
+<span class="o">--------</span>
+<span class="n">name</span>
+<span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+<p>See the <a class="reference internal" href="5_inheritance.html#inheritance"><span class="std std-ref">Inheritance</span></a> section for details.</p>
+</div>
+<div class="section" id="fields">
+<h2>Fields<a class="headerlink" href="#fields" title="Permalink to this headline">¶</a></h2>
+<p>“name” and “age” are fields. Each field is displayed on a new line. Grouping fields with empty lines between them
+on a new line is also ok, and highly recommended:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#cat</span>
+<span class="o">--------</span>
+<span class="n">name</span>
+<span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+
+<span class="n">owner_name</span>
+<span class="n">owner_phone</span>
+</pre></div>
+</div>
+<p>The syntax for a field is:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">modifiers</span><span class="p">]</span> <span class="n">field_name</span><span class="p">:</span> <span class="n">field_type</span>
+</pre></div>
+</div>
+<p>field_type is optional and is seen as “text(100)” by default.</p>
+<p>You can read more about field types in the <a class="reference internal" href="2_1_field_types.html#filedtypes"><span class="std std-ref">Field types</span></a> section.</p>
+<div class="section" id="field-modifiers">
+<h3>Field modifiers<a class="headerlink" href="#field-modifiers" title="Permalink to this headline">¶</a></h3>
+<p>The field may have a prefix with modifiers, e.g. required modifier:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#cat</span>
+<span class="o">--------</span>
+<span class="o">*</span><span class="n">name</span>
+<span class="o">*</span><span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+
+<span class="n">owner_name</span>
+<span class="n">owner_phone</span>
+</pre></div>
+</div>
+<p>This means that the name and age fields are required.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>There are several field modifiers that can be used to change field behavior:</p>
+<dl class="last docutils">
+<dt><strong>$</strong></dt>
+<dd>Make field localizable. Any type of field could be localized, including relationships.
+<a class="reference external" href="https://github.com/deschler/django-modeltranslation">django-modeltranslation</a> is used.</dd>
+<dt><strong>=</strong></dt>
+<dd>Value of this field is used when object is printed (__str__() method)</dd>
+<dt><strong>&amp;</strong></dt>
+<dd>Unique index is created on a field</dd>
+<dt><strong>!</strong></dt>
+<dd>Index is created for a field</dd>
+<dt><strong>*</strong></dt>
+<dd>Required field (not blank). The field does not allow empty values when submitted through django forms.</dd>
+<dt><strong>~</strong></dt>
+<dd>Not null. Adds a “not null” constraint on the database level.</dd>
+</dl>
+</div>
+</div>
+<div class="section" id="help-message">
+<h3>Help message<a class="headerlink" href="#help-message" title="Permalink to this headline">¶</a></h3>
+<p>Help message is an easy way to add comments to model fields. This message will be shown on
+forms as a “help message”, usually a small text on the right side of the name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#cat
+--------
+*name
+*age: int
+
+owner_name
+*owner_phone ?phone is required if the cat is get lost
+</pre></div>
+</div>
+</div>
+<div class="section" id="verbose-name">
+<h3>Verbose name<a class="headerlink" href="#verbose-name" title="Permalink to this headline">¶</a></h3>
+<p>A field name may not contain spaces, so it is sometimes useful to provide descriptive read-only name:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#sauna_heater</span>
+<span class="o">----------------</span>
+<span class="n">power</span><span class="p">:</span> <span class="nb">int</span> <span class="o">/</span><span class="n">Maximum</span> <span class="n">power</span>
+<span class="n">room_size</span><span class="p">:</span> <span class="nb">int</span> <span class="o">/</span><span class="s2">&quot;Sauna room size (min - max)&quot;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="custom-options">
+<h3>Custom options<a class="headerlink" href="#custom-options" title="Permalink to this headline">¶</a></h3>
+<p>When generator is not powerful enough for you, you can add extra options to fields:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">mydate</span><span class="p">:</span> <span class="n">create_time</span>
+
+<span class="o">//</span> <span class="n">This</span> <span class="n">will</span> <span class="n">add</span> <span class="n">option</span> <span class="n">to</span> <span class="n">field</span>
+<span class="n">abc</span><span class="p">:</span> <span class="nb">str</span><span class="p">(</span><span class="mi">255</span><span class="p">)</span> <span class="o">..</span><span class="p">{</span><span class="n">unique_for_date</span><span class="o">=</span><span class="s2">&quot;mydate&quot;</span><span class="p">}</span>
+
+<span class="o">//</span> <span class="n">This</span> <span class="n">will</span> <span class="n">replace</span> <span class="nb">all</span> <span class="n">options</span> <span class="n">of</span> <span class="n">the</span> <span class="n">fields</span>
+<span class="n">abc</span><span class="p">:</span> <span class="nb">str</span> <span class="p">{</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">,</span> <span class="n">unique_for_date</span><span class="o">=</span><span class="s2">&quot;mydate&quot;</span><span class="p">}</span>
+
+<span class="o">//</span> <span class="n">This</span> <span class="n">will</span> <span class="n">replace</span> <span class="n">entire</span> <span class="n">field</span> <span class="n">definition</span><span class="p">,</span> <span class="n">so</span> <span class="n">you</span> <span class="n">are</span> <span class="n">free</span> <span class="n">to</span> <span class="n">use</span> <span class="n">custom</span> <span class="n">fields</span>
+<span class="n">abc</span><span class="p">:</span> <span class="p">{</span><span class="n">models</span><span class="o">.</span><span class="n">BinaryField</span><span class="p">(</span><span class="n">max_length</span><span class="o">=</span><span class="mi">255</span><span class="p">)}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="annotations">
+<h2>Annotations<a class="headerlink" href="#annotations" title="Permalink to this headline">¶</a></h2>
+<p>Annotations are super-powers in Zmei generator. They add different abilities to models, e.g. &#64;admin generates an admin panel, and &#64;rest adds an automatic REST API:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>#page
+-------------
+=*$title
+~$slug: slug(title)
+$url
+
+@admin(
+    list: *
+}
+@rest
+@api
+</pre></div>
+</div>
+<p>Read more about extras in the <a class="reference internal" href="../model_extras.html#modelextras"><span class="std std-ref">Model annotations</span></a> section.</p>
+</div>
+</div>
+
+  <div class="section">
+  
+  
+  </div>
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="../models.html" title="Previous document">Models</a>
+        </li>
+        <li>
+          <a href="2_1_field_types.html" title="Next document">Field types</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+    <!--<a href="https://github.com///blob/master/models/1_syntax.rst" class="github" target="_blank">-->
+        <!--<img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">-->
+    <!--</a>-->
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/img/logo.jpg" alt="Logo"/>
+    
+    <h1 class="logo logo-name">Zmei Generator</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../col.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../col_extras.html">App annotations</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../models.html">Models</a><ul class="current">
+<li class="toctree-l2 current"><a class="current reference internal" href="#">Overview</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_1_field_types.html">Field types</a></li>
+<li class="toctree-l2"><a class="reference internal" href="2_2_relations.html">Relationships</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_to_string.html">To string</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_calculated_fields.html">Calculated fields</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_inheritance.html">Inheritance</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../model_extras.html">Model annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../pages.html">Pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../page_extras.html">Page annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../crud.html">Crud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../syntax.html">Syntax</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="/generator/blog.html">Articles</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  <li><a href="../models.html">Models</a><ul>
+      <li>Previous: <a href="../models.html" title="previous chapter">Models</a></li>
+      <li>Next: <a href="2_1_field_types.html" title="next chapter">Field types</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+  <h3><a href="../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../blog/3_django_i18n.html">01 December - Full i18n of Django application (urls, models, templates, code)</a></li>
+    
+      <li><a href="../blog/2_Zmei_quick_start_3.html">30 November - Deploy Django application to a public url in 60 seconds</a></li>
+    
+      <li><a href="../blog/1_Zmei_quick_start_2.html">27 November - Django REST & Admin with a nice theme in 60 seconds</a></li>
+    
+      <li><a href="../blog/0_Zmei_quick_start.html">24 November - Django application in 60 seconds</a></li>
+    
+  </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Alex Rudakov.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/models/1_syntax.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-116654219-4']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

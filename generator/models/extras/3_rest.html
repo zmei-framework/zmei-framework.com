@@ -1,0 +1,519 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@rest &#8212; Zmei Generator 2.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="@pre_* @post_*" href="4_signals.html" />
+    <link rel="prev" title="@sortable" href="3_order.html" />
+  
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../blog/atom.xml" title="Zmei generator's blog">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="3_order.html" title="Previous document">&#64;sortable</a>
+        </li>
+        <li>
+          <a href="4_signals.html" title="Next document">&#64;pre_* &#64;post_*</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="rest">
+<h1>&#64;rest<a class="headerlink" href="#rest" title="Permalink to this headline">¶</a></h1>
+<p>The &#64;rest annotation configures django-rest-framework to expose your model api.</p>
+<div class="section" id="basic-syntax">
+<h2>Basic syntax<a class="headerlink" href="#basic-syntax" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="serializer">
+<h3>Serializer<a class="headerlink" href="#serializer" title="Permalink to this headline">¶</a></h3>
+<p>To create a REST serializer for your model, just add &#64;rest annotation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span>
+</pre></div>
+</div>
+<p>You can add as many serializers to a model as needed, adding descriptor:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span>
+<span class="nd">@rest</span><span class="o">.</span><span class="n">another</span>
+<span class="nd">@rest</span><span class="o">.</span><span class="n">foo</span>
+</pre></div>
+</div>
+<p>Every &#64;rest annotation can have different configuration.</p>
+</div>
+<div class="section" id="public-api">
+<h3>Public api<a class="headerlink" href="#public-api" title="Permalink to this headline">¶</a></h3>
+<p>To expose a public REST endpoint, you need &#64;api annotation:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span>
+<span class="nd">@api</span>
+</pre></div>
+</div>
+<p>Now you can see this on /api/ url of your application.</p>
+<p>If you have multiple serializers, you must to specify which ones to expose:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span>
+<span class="nd">@rest</span><span class="o">.</span><span class="n">another</span>
+<span class="nd">@rest</span><span class="o">.</span><span class="n">foo</span>
+
+<span class="nd">@api</span><span class="p">(</span><span class="n">_</span><span class="p">,</span><span class="n">another</span><span class="p">,</span><span class="n">foo</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Or all at once:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span>
+<span class="nd">@rest</span><span class="o">.</span><span class="n">another</span>
+<span class="nd">@rest</span><span class="o">.</span><span class="n">foo</span>
+
+<span class="nd">@api</span><span class="p">(</span><span class="o">*</span><span class="p">)</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="rest-configuration">
+<h2>Rest configuration<a class="headerlink" href="#rest-configuration" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="field-names">
+<h3>Field names<a class="headerlink" href="#field-names" title="Permalink to this headline">¶</a></h3>
+<p>Specify which fields to use in serializer (<a class="reference internal" href="../../syntax/2_fields.html#fieldlist"><span class="std std-ref">Field list</span></a> syntax):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span><span class="p">(</span>
+    <span class="n">fields</span><span class="p">:</span> <span class="o">*</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="read-only-fields">
+<h3>Read-only fields<a class="headerlink" href="#read-only-fields" title="Permalink to this headline">¶</a></h3>
+<p>Some fields may be read-only (<a class="reference internal" href="../../syntax/2_fields.html#fieldlist"><span class="std std-ref">Field list</span></a> syntax):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+<span class="n">efg</span>
+
+<span class="nd">@rest</span><span class="p">(</span>
+    <span class="n">fields</span><span class="p">:</span> <span class="o">*</span>
+    <span class="n">read_only</span><span class="p">:</span> <span class="o">*</span><span class="p">,</span> <span class="o">^</span><span class="n">abc</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="i18n-url">
+<h3>I18n url<a class="headerlink" href="#i18n-url" title="Permalink to this headline">¶</a></h3>
+<p>You can have i18n for rest (language prefix added to the urls):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span><span class="p">(</span>
+    <span class="n">i18n</span><span class="p">:</span> <span class="n">true</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="permissions">
+<h3>Permissions<a class="headerlink" href="#permissions" title="Permalink to this headline">¶</a></h3>
+<p>You can specify is rest endpoint is read, write or both:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span><span class="o">.</span><span class="n">r</span><span class="p">(</span>
+    <span class="n">fields</span><span class="p">:</span> <span class="o">*</span> <span class="p">[</span><span class="n">r</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="nd">@rest</span><span class="o">.</span><span class="n">rw</span><span class="p">(</span>
+    <span class="n">fields</span><span class="p">:</span> <span class="o">*</span> <span class="p">[</span><span class="n">rw</span><span class="p">]</span>
+<span class="p">)</span>
+<span class="nd">@rest</span><span class="o">.</span><span class="n">w</span><span class="p">(</span>
+    <span class="n">fields</span><span class="p">:</span> <span class="o">*</span> <span class="p">[</span><span class="n">w</span><span class="p">]</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>r - read-only (default)</li>
+<li>rw - read and write</li>
+<li>w - write only, read not allowed</li>
+</ul>
+</div>
+<div class="section" id="user-field">
+<h3>User-field<a class="headerlink" href="#user-field" title="Permalink to this headline">¶</a></h3>
+<p>Objects may be queued/created by user:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">owner</span><span class="p">:</span> <span class="n">one</span><span class="p">(</span><span class="n">auth</span><span class="o">.</span><span class="n">User</span><span class="p">)</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span><span class="p">(</span>
+    <span class="n">fields</span><span class="p">:</span> <span class="o">*</span> <span class="p">[</span><span class="n">rw</span><span class="p">]</span>
+    <span class="n">user_field</span><span class="p">:</span> <span class="n">owner</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<ul class="simple">
+<li>Rest endpoint will show only records filtered by current user.</li>
+<li>Rest endpoint will assign current user for new model instances.</li>
+</ul>
+</div>
+<div class="section" id="query">
+<h3>Query<a class="headerlink" href="#query" title="Permalink to this headline">¶</a></h3>
+<p>You can adjust query of rest endpoint:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span><span class="o">.</span><span class="n">yes</span><span class="p">(</span>
+    <span class="n">query</span> <span class="p">:</span><span class="o">=</span> <span class="nb">filter</span><span class="p">(</span><span class="n">a</span><span class="o">=</span><span class="mi">123</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>“query” use python code one-line syntax(<a class="reference internal" href="../../syntax/1_python.html#pythoncode"><span class="std std-ref">Python expression</span></a>). You can also use <a class="reference internal" href="../../syntax/0_imports.html#imports"><span class="std std-ref">Code imports</span></a> to use external code in expression.</p>
+</div>
+<div class="section" id="on-create">
+<h3>On create<a class="headerlink" href="#on-create" title="Permalink to this headline">¶</a></h3>
+<p>You can specify a piece of code to run, after create method called (<a class="reference internal" href="../../syntax/1_python.html#pythoncode"><span class="std std-ref">Python expression</span></a> syntax):</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span><span class="p">(</span>
+    <span class="n">on_create</span> <span class="p">{</span>
+        <span class="mi">3</span> <span class="o">+</span> <span class="mi">3</span> <span class="o">=</span> <span class="mi">4</span>
+    <span class="p">}</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>It’s not the same as adding &#64;post_save on a model, as on_create is called after all models are created
+including all relations.</p>
+<p>And one-liner:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span><span class="p">(</span>
+    <span class="n">on_create</span> <span class="p">:</span><span class="o">=</span> <span class="n">some</span><span class="p">()</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>You can also use <a class="reference internal" href="../../syntax/0_imports.html#imports"><span class="std std-ref">Code imports</span></a> to use external code in expression.</p>
+</div>
+<div class="section" id="inlines">
+<h3>Inlines<a class="headerlink" href="#inlines" title="Permalink to this headline">¶</a></h3>
+<p>Serializers can be nested as many levels as needed:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#other</span>
+<span class="o">-----------</span>
+<span class="n">lala1</span>
+<span class="n">lala2</span>
+<span class="n">lala3</span>
+
+<span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">abc</span><span class="p">:</span> <span class="n">one</span><span class="p">(</span><span class="c1">#other)</span>
+<span class="n">cda</span>
+
+<span class="nd">@rest</span><span class="p">(</span>
+    <span class="n">inline</span><span class="p">:</span> <span class="n">abc</span><span class="p">(</span>
+        <span class="n">fields</span><span class="p">:</span> <span class="o">*</span><span class="p">,</span> <span class="o">^</span><span class="n">lala2</span>
+
+        <span class="o">//</span> <span class="n">also</span> <span class="n">you</span> <span class="n">can</span> <span class="n">add</span> <span class="n">another</span> <span class="n">inline</span> <span class="n">here</span><span class="p">,</span> <span class="ow">and</span> <span class="n">one</span> <span class="n">more</span> <span class="n">inside</span><span class="o">...</span> <span class="n">but</span> <span class="n">mind</span> <span class="n">performance</span><span class="p">,</span> <span class="ow">and</span> <span class="n">use</span> <span class="n">prefetch_related</span> <span class="ow">in</span> <span class="n">query</span>
+        <span class="o">//</span> <span class="n">inline</span> <span class="p">(</span>
+        <span class="o">//</span>     <span class="o">...</span>
+        <span class="o">//</span> <span class="p">)</span>
+    <span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="annotate">
+<h4>Annotate<a class="headerlink" href="#annotate" title="Permalink to this headline">¶</a></h4>
+<p>&#64;rest supports the Count() annotation on fields:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#item</span>
+<span class="o">---------</span>
+<span class="n">lala</span>
+
+<span class="c1">#boo</span>
+<span class="o">----------</span>
+<span class="n">items</span><span class="p">:</span> <span class="n">many</span><span class="p">(</span><span class="c1">#item)</span>
+
+<span class="nd">@rest</span><span class="p">(</span>
+    <span class="n">annotate</span><span class="p">:</span> <span class="n">count</span> <span class="n">items</span> <span class="k">as</span> <span class="n">item_count</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Later more annotations will be added. For the moment, you can create annotations by setting custom query.</p>
+</div>
+<div class="section" id="authentication">
+<h4>Authentication<a class="headerlink" href="#authentication" title="Permalink to this headline">¶</a></h4>
+<p>You can easily add an authentication of your choice:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#dog</span>
+<span class="o">--------------</span>
+<span class="n">name</span>
+<span class="n">age</span>
+
+<span class="nd">@rest</span><span class="p">(</span>
+    <span class="n">auth</span><span class="p">(</span><span class="n">basic</span><span class="p">,</span> <span class="n">session</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Or token authentication:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="c1">#token</span>
+<span class="o">----------</span>
+<span class="n">name</span>
+<span class="n">user</span><span class="p">:</span> <span class="n">one</span><span class="p">(</span><span class="n">cratis_profile</span><span class="o">.</span><span class="n">User</span><span class="p">)</span>
+
+<span class="nd">@mixin</span><span class="p">(</span><span class="n">rest_framework</span><span class="o">.</span><span class="n">authtoken</span><span class="o">.</span><span class="n">models</span><span class="o">.</span><span class="n">Token</span><span class="p">)</span>
+
+
+<span class="c1">#dog</span>
+<span class="o">--------------</span>
+<span class="n">name</span>
+<span class="n">age</span>
+
+<span class="nd">@rest</span><span class="p">(</span>
+    <span class="n">auth</span><span class="p">(</span><span class="n">token</span><span class="p">:</span> <span class="c1">#token)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+<p>Authentication options are:</p>
+<dl class="docutils">
+<dt>basic</dt>
+<dd><a class="reference external" href="http://www.django-rest-framework.org/api-guide/authentication/#basicauthentication">Basic http authentication</a>. Not secure. Use only over SSL</dd>
+<dt>session</dt>
+<dd>Allow access if user is authenticated through web. Useful for debugging REST api in browser.</dd>
+<dt>token</dt>
+<dd><a class="reference external" href="http://www.django-rest-framework.org/api-guide/authentication/#tokenauthentication">Token based authentication</a>. Use only over SSL.</dd>
+</dl>
+</div>
+</div>
+</div>
+</div>
+
+  <div class="section">
+  
+  
+  </div>
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="3_order.html" title="Previous document">&#64;sortable</a>
+        </li>
+        <li>
+          <a href="4_signals.html" title="Next document">&#64;pre_* &#64;post_*</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+    <!--<a href="https://github.com///blob/master/models/extras/3_rest.rst" class="github" target="_blank">-->
+        <!--<img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">-->
+    <!--</a>-->
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/img/logo.jpg" alt="Logo"/>
+    
+    <h1 class="logo logo-name">Zmei Generator</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../col.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../col_extras.html">App annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Models</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../model_extras.html">Model annotations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="2_admin.html">&#64;admin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_order.html">&#64;sortable</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">&#64;rest</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_signals.html">&#64;pre_* &#64;post_*</a></li>
+<li class="toctree-l2"><a class="reference internal" href="5_clean.html">&#64;clean</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6_date_tree.html">&#64;date_tree</a></li>
+<li class="toctree-l2"><a class="reference internal" href="7_mixin.html">&#64;mixin</a></li>
+<li class="toctree-l2"><a class="reference internal" href="8_tree.html">&#64;tree</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages.html">Pages</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../page_extras.html">Page annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../crud.html">Crud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../syntax.html">Syntax</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="/generator/blog.html">Articles</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../../model_extras.html">Model annotations</a><ul>
+      <li>Previous: <a href="3_order.html" title="previous chapter">&#64;sortable</a></li>
+      <li>Next: <a href="4_signals.html" title="next chapter">&#64;pre_* &#64;post_*</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+  <h3><a href="../../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../../blog/3_django_i18n.html">01 December - Full i18n of Django application (urls, models, templates, code)</a></li>
+    
+      <li><a href="../../blog/2_Zmei_quick_start_3.html">30 November - Deploy Django application to a public url in 60 seconds</a></li>
+    
+      <li><a href="../../blog/1_Zmei_quick_start_2.html">27 November - Django REST & Admin with a nice theme in 60 seconds</a></li>
+    
+      <li><a href="../../blog/0_Zmei_quick_start.html">24 November - Django application in 60 seconds</a></li>
+    
+  </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Alex Rudakov.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/models/extras/3_rest.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-116654219-4']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

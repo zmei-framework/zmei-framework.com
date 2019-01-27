@@ -1,0 +1,450 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Django application in 60 seconds &#8212; Zmei Generator 2.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../blog/atom.xml" title="Zmei generator's blog">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="django-application-in-60-seconds">
+<span id="sec-1"></span><h1>Django application in 60 seconds<a class="headerlink" href="#django-application-in-60-seconds" title="Permalink to this headline">¶</a></h1>
+<p>In this small tutorial, we will learn how to create a very simple useless application, but it already can show the power of Zmei.</p>
+<p>This is the first article in “Django in 60 seconds” series.</p>
+<ul class="simple">
+<li><a class="reference internal" href="#sec-1"><span class="std std-ref">Django application in 60 seconds</span></a></li>
+<li><a class="reference internal" href="1_Zmei_quick_start_2.html#sec-2"><span class="std std-ref">Django REST &amp; Admin with a nice theme in 60 seconds</span></a></li>
+<li><a class="reference internal" href="2_Zmei_quick_start_3.html#sec-3"><span class="std std-ref">Deploy Django application to a public url in 60 seconds</span></a></li>
+</ul>
+<p>Our app will manage cats list. Just for fun :)</p>
+<div class="section" id="preparation">
+<h2>Preparation<a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h2>
+<p>First make sure you have installed generator. Documentation is here: <a class="reference internal" href="../intro/2_installation.html#installation"><span class="std std-ref">Installation</span></a></p>
+<p>Also create a virtual-environment for your project: <a class="reference external" href="https://docs.python-guide.org/dev/virtualenvs/">https://docs.python-guide.org/dev/virtualenvs/</a></p>
+<p>I will create a virtualenv using virtualenvwrapper:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ mkvirtualenv cats
+$ pip install zmei-cli
+</pre></div>
+</div>
+</div>
+<div class="section" id="col-file">
+<h2>Col file<a class="headerlink" href="#col-file" title="Permalink to this headline">¶</a></h2>
+<p>Create cats.col file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">index</span><span class="p">:</span> <span class="o">/</span><span class="p">]</span>
+<span class="nd">@crud</span><span class="p">(</span><span class="c1">#cat)</span>
+
+<span class="c1">#cat</span>
+<span class="o">-----------</span>
+<span class="o">=</span><span class="n">name</span>
+<span class="n">age</span><span class="p">:</span> <span class="nb">int</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="magic">
+<h2>Magic!<a class="headerlink" href="#magic" title="Permalink to this headline">¶</a></h2>
+<p>Start zmei:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ zmei gen up
+</pre></div>
+</div>
+<p>Out:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>Up!
+--------------------------------------------
+Generating ...
+--------------------------------------------
+ +    /Users/aleksandrrudakov/dev/tmp3/app/templates/base.html
+ +    /Users/aleksandrrudakov/dev/tmp3/cats/templates/cats/index_create.html
+ +    /Users/aleksandrrudakov/dev/tmp3/app/wsgi.py
+ +    /Users/aleksandrrudakov/dev/tmp3/cats/templates/cats/index_detail.html
+ +    /Users/aleksandrrudakov/dev/tmp3/cats/urls.py
+ +    /Users/aleksandrrudakov/dev/tmp3/cats/templates/cats/index_edit.html
+ +    /Users/aleksandrrudakov/dev/tmp3/app/templates/crud/default/detail.html
+ +    /Users/aleksandrrudakov/dev/tmp3/app/templates/crud/default/delete.html
+ +    /Users/aleksandrrudakov/dev/tmp3/cats/__init__.py
+ +    /Users/aleksandrrudakov/dev/tmp3/cats/templates/cats/index.html
+ +    /Users/aleksandrrudakov/dev/tmp3/cats/views.py
+ +    /Users/aleksandrrudakov/dev/tmp3/app/templates/crud/default/edit.html
+ +    /Users/aleksandrrudakov/dev/tmp3/requirements.txt
+ +    /Users/aleksandrrudakov/dev/tmp3/app/_urls.py
+ +    /Users/aleksandrrudakov/dev/tmp3/cats/templates/cats/index_delete.html
+ +    /Users/aleksandrrudakov/dev/tmp3/_requirements.txt
+ +    /Users/aleksandrrudakov/dev/tmp3/cats/templates/cats/base.html
+ +    /Users/aleksandrrudakov/dev/tmp3/app/templates/crud/default/list.html
+ +    /Users/aleksandrrudakov/dev/tmp3/manage.py
+ +    /Users/aleksandrrudakov/dev/tmp3/app/urls.py
+ +    /Users/aleksandrrudakov/dev/tmp3/app/settings.py
+ +    /Users/aleksandrrudakov/dev/tmp3/app/__init__.py
+ +    /Users/aleksandrrudakov/dev/tmp3/cats/models.py
+ +    /Users/aleksandrrudakov/dev/tmp3/app/_settings.py
+ +    /Users/aleksandrrudakov/dev/tmp3/app/templates/crud/default/create.html
+&gt;  Installing pip dependencies...
+Requirement already satisfied: django&gt;2 in /Users/aleksandrrudakov/.virtualenvs/gen/lib/python3.6/site-packages (from -r _requirements.txt (line 3)) (2.1.2)
+Requirement already satisfied: wheel in /Users/aleksandrrudakov/.virtualenvs/gen/lib/python3.6/site-packages (from -r _requirements.txt (line 4)) (0.32.2)
+Requirement already satisfied: zmei-utils==0.1.12 in /Users/aleksandrrudakov/dev/zmei (from -r _requirements.txt (line 5)) (0.1.12)
+Requirement already satisfied: pytz in /Users/aleksandrrudakov/.virtualenvs/gen/lib/python3.6/site-packages (from django&gt;2-&gt;-r _requirements.txt (line 3)) (2018.6)
+Requirement already satisfied: djangorestframework in /Users/aleksandrrudakov/.virtualenvs/gen/lib/python3.6/site-packages (from zmei-utils==0.1.12-&gt;-r _requirements.txt (line 5)) (3.9.0)
+&gt;  Migrating database
+Migrations for &#39;cats&#39;:
+  cats/migrations/0001_initial.py
+    - Create model Cat
+Operations to perform:
+  Apply all migrations: admin, auth, cats, contenttypes, sessions
+Running migrations:
+  Applying contenttypes.0001_initial... OK
+  Applying auth.0001_initial... OK
+  Applying admin.0001_initial... OK
+  Applying admin.0002_logentry_remove_auto_add... OK
+  Applying admin.0003_logentry_add_action_flag_choices... OK
+  Applying contenttypes.0002_remove_content_type_name... OK
+  Applying auth.0002_alter_permission_name_max_length... OK
+  Applying auth.0003_alter_user_email_max_length... OK
+  Applying auth.0004_alter_user_username_opts... OK
+  Applying auth.0005_alter_user_last_login_null... OK
+  Applying auth.0006_require_contenttypes_0002... OK
+  Applying auth.0007_alter_validators_add_error_messages... OK
+  Applying auth.0008_alter_user_username_max_length... OK
+  Applying auth.0009_alter_user_last_name_max_length... OK
+  Applying cats.0001_initial... OK
+  Applying sessions.0001_initial... OK
+&gt;  Starting django
+python manage.py runserver 127.0.0.1:8000
+&gt;  Watching for changes...
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 20, 2018 - 23:22:26
+Django version 2.1.2, using settings &#39;app.settings&#39;
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+</pre></div>
+</div>
+</div>
+<div class="section" id="results">
+<h2>Results<a class="headerlink" href="#results" title="Permalink to this headline">¶</a></h2>
+<p>Go to “<a class="reference external" href="http://127.0.0.1:8000/">http://127.0.0.1:8000/</a>” to see results.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">The result of the generation is a usual Django app, so you can run it with “python manage.py runserver” as well.</p>
+</div>
+<iframe width="660" height="415" src="https://www.youtube.com/embed/WLwYC-rspK4" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div class="section" id="deploy-it">
+<h2>Deploy it<a class="headerlink" href="#deploy-it" title="Permalink to this headline">¶</a></h2>
+<p>The result is a usual Django application so you can deploy it for example on <a class="reference external" href="https://www.pythonanywhere.com/">https://www.pythonanywhere.com/</a> as any usual Django application.</p>
+</div>
+<div class="section" id="to-be-continued">
+<h2>… to be continued<a class="headerlink" href="#to-be-continued" title="Permalink to this headline">¶</a></h2>
+<p>Next time we will add the Django administration panel and REST API to our cat manager application. Stay tuned … ;)</p>
+</div>
+</div>
+
+  <div class="section">
+  
+    
+
+
+<div class="section">
+  <span style="float: left;">
+  
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right;">
+  
+  Next: 
+  <a href="1_Zmei_quick_start_2.html">
+    Django REST & Admin with a nice theme in 60 seconds
+    
+  </a>
+  </span>
+  
+</div>
+
+  
+  
+    <div class="section">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'zmei-blog';
+        var disqus_identifier = '/blog/0_Zmei_quick_start/';
+        var disqus_title = 'Django application in 60 seconds';
+        var disqus_url = 'https://zmei-framework.com/generator/blog/0_Zmei_quick_start';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+  </div>
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+    <!--<a href="https://github.com///blob/master/blog/0_Zmei_quick_start.rst" class="github" target="_blank">-->
+        <!--<img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">-->
+    <!--</a>-->
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/img/logo.jpg" alt="Logo"/>
+    
+    <h1 class="logo logo-name">Zmei Generator</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+
+  
+  
+  <h2>
+  
+  
+    24 November 2018
+  
+  </h2>
+
+  <ul>
+    
+
+  
+  <li id="author"><span>Author:</span>
+    
+      
+      <a href="author/alex-rudakov.html">Alex Rudakov</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+  <li id="category"><span>Category:</span>
+    
+      
+      <a href="category/tutorial.html">Tutorial</a>
+      
+    </li>
+  
+
+  
+  <li id="tags"><span>Tags:
+      </span>
+    
+      
+      <a href="tag/intro.html">intro</a>
+      
+    
+      
+      <a href="tag/60sec.html">60sec</a>
+      
+    </li>
+  
+  
+  <li id="comments">
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'zmei-blog'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+    
+    <a href="#disqus_thread" data-disqus-identifier="/blog/0_Zmei_quick_start/"> Comments</a>
+  </li>
+  
+  </ul>
+
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <h3><a href="tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="tag/60sec.html">60sec</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/admin.html">admin</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/deploy.html">deploy</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/i18n.html">i18n</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="tag/intro.html">intro</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/models.html">models</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/rest.html">rest</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/video.html">video</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="3_django_i18n.html">01 December - Full i18n of Django application (urls, models, templates, code)</a></li>
+    
+      <li><a href="2_Zmei_quick_start_3.html">30 November - Deploy Django application to a public url in 60 seconds</a></li>
+    
+      <li><a href="1_Zmei_quick_start_2.html">27 November - Django REST & Admin with a nice theme in 60 seconds</a></li>
+    
+  </ul>
+
+  <h3><a href="archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="2018.html">2018 (4)</a></li>
+    
+  
+  </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Alex Rudakov.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/blog/0_Zmei_quick_start.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-116654219-4']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

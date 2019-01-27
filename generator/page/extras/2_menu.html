@@ -1,0 +1,305 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>@menu &#8212; Zmei Generator 2.0 documentation</title>
+    <link rel="stylesheet" href="../../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../../" src="../../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../../_static/jquery.js"></script>
+    <script type="text/javascript" src="../../_static/underscore.js"></script>
+    <script type="text/javascript" src="../../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../../genindex.html" />
+    <link rel="search" title="Search" href="../../search.html" />
+    <link rel="next" title="@error(xxx)" href="3_error.html" />
+    <link rel="prev" title="@auth" href="1_auth.html" />
+  
+   
+  <link rel="stylesheet" href="../../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../../blog/atom.xml" title="Zmei generator's blog">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="1_auth.html" title="Previous document">&#64;auth</a>
+        </li>
+        <li>
+          <a href="3_error.html" title="Next document">&#64;error(xxx)</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="menu">
+<h1>&#64;menu<a class="headerlink" href="#menu" title="Permalink to this headline">¶</a></h1>
+<p>Menu is a simple way to organize navigation menus.</p>
+<div class="section" id="pages-links">
+<h2>Pages links<a class="headerlink" href="#pages-links" title="Permalink to this headline">¶</a></h2>
+<p>Using them with pages is the easiest course of action:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">base</span><span class="p">]</span>
+<span class="nd">@menu</span><span class="o">.</span><span class="n">main</span><span class="p">(</span>
+    <span class="s2">&quot;Home&quot;</span><span class="p">:</span> <span class="n">page</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="s2">&quot;Profile&quot;</span><span class="p">:</span> <span class="n">page</span><span class="p">(</span><span class="n">dashboard</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="p">[</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">:</span> <span class="o">/</span><span class="p">]</span>
+
+<span class="p">[</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">dashboard</span><span class="p">:</span> <span class="o">/</span><span class="n">dashboard</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="reverse-links">
+<h2>Reverse links<a class="headerlink" href="#reverse-links" title="Permalink to this headline">¶</a></h2>
+<p>Any reverse expression may also be used as a menu link:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">base</span><span class="p">]</span>
+<span class="nd">@menu</span><span class="o">.</span><span class="n">main</span><span class="p">(</span>
+    <span class="s2">&quot;Google&quot;</span> <span class="p">:</span><span class="o">=</span> <span class="n">reverse_lazy</span><span class="p">(</span><span class="s1">&#39;some.page&#39;</span><span class="p">)</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="plain-url">
+<h2>Plain url<a class="headerlink" href="#plain-url" title="Permalink to this headline">¶</a></h2>
+<p>Example:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">base</span><span class="p">]</span>
+<span class="nd">@menu</span><span class="o">.</span><span class="n">main</span><span class="p">(</span>
+    <span class="s2">&quot;Google&quot;</span><span class="p">:</span> <span class="s2">&quot;https://google.com&quot;</span>
+<span class="p">)</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="multiple-menus-on-one-page">
+<h2>Multiple menus on one page<a class="headerlink" href="#multiple-menus-on-one-page" title="Permalink to this headline">¶</a></h2>
+<p>You are free to use many menus on a page, just give them different names:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">[</span><span class="n">base</span><span class="p">]</span>
+<span class="nd">@menu</span><span class="o">.</span><span class="n">footer</span><span class="p">(</span>
+    <span class="s2">&quot;Google&quot;</span><span class="p">:</span> <span class="s2">&quot;https://google.com&quot;</span>
+<span class="p">)</span>
+
+<span class="nd">@menu</span><span class="o">.</span><span class="n">main</span><span class="p">(</span>
+    <span class="s2">&quot;Home&quot;</span><span class="p">:</span> <span class="n">page</span><span class="p">(</span><span class="n">index</span><span class="p">)</span>
+    <span class="s2">&quot;Profile&quot;</span><span class="p">:</span> <span class="n">page</span><span class="p">(</span><span class="n">dashboard</span><span class="p">)</span>
+<span class="p">)</span>
+
+<span class="p">[</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">index</span><span class="p">:</span> <span class="o">/</span><span class="p">]</span>
+
+<span class="p">[</span><span class="n">base</span><span class="o">-&gt;</span><span class="n">dashboard</span><span class="p">:</span> <span class="o">/</span><span class="n">dashboard</span><span class="p">]</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="displaying-menus">
+<h2>Displaying menus<a class="headerlink" href="#displaying-menus" title="Permalink to this headline">¶</a></h2>
+<p>base.html that is generated by default already contains block where “&#64;menu.main” is injected:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">%</span> <span class="n">block</span> <span class="n">menu_main</span> <span class="o">%</span><span class="p">}{</span><span class="o">%</span> <span class="n">endblock</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>If you need to display other menues, like “footer”, add them to page as well:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="p">{</span><span class="o">%</span> <span class="n">block</span> <span class="n">menu_footer</span> <span class="o">%</span><span class="p">}{</span><span class="o">%</span> <span class="n">endblock</span> <span class="o">%</span><span class="p">}</span>
+</pre></div>
+</div>
+<p>Alternative option is to draw menu manually, like this:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="o">&lt;</span><span class="n">ul</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="k">for</span> <span class="n">ref</span><span class="p">,</span> <span class="n">item</span> <span class="ow">in</span> <span class="n">menu</span><span class="o">.</span><span class="n">footer</span><span class="o">.</span><span class="n">items</span><span class="o">.</span><span class="n">items</span> <span class="o">%</span><span class="p">}</span>
+    <span class="o">&lt;</span><span class="n">li</span><span class="o">&gt;</span>
+        <span class="o">&lt;</span><span class="n">a</span> <span class="n">class</span><span class="o">=</span><span class="s2">&quot;{</span><span class="si">% i</span><span class="s2">f item.active %}active{</span><span class="si">% e</span><span class="s2">ndif %}&quot;</span> <span class="n">href</span><span class="o">=</span><span class="s2">&quot;{{ item.link }}&quot;</span><span class="o">&gt;</span><span class="p">{{</span> <span class="n">item</span><span class="o">.</span><span class="n">label</span> <span class="p">}}</span><span class="o">&lt;/</span><span class="n">a</span><span class="o">&gt;</span>
+    <span class="o">&lt;/</span><span class="n">li</span><span class="o">&gt;</span>
+    <span class="p">{</span><span class="o">%</span> <span class="n">endfor</span> <span class="o">%</span><span class="p">}</span>
+<span class="o">&lt;/</span><span class="n">ul</span><span class="o">&gt;</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="styling-menus">
+<h2>Styling menus<a class="headerlink" href="#styling-menus" title="Permalink to this headline">¶</a></h2>
+<p>Menu templates are stored in app/templates/menu/default/menu_*.html files. Feel free to edit them.</p>
+</div>
+</div>
+
+  <div class="section">
+  
+  
+  </div>
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+        <li>
+          &larr;
+          <a href="1_auth.html" title="Previous document">&#64;auth</a>
+        </li>
+        <li>
+          <a href="3_error.html" title="Next document">&#64;error(xxx)</a>
+          &rarr;
+        </li>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+    <!--<a href="https://github.com///blob/master/page/extras/2_menu.rst" class="github" target="_blank">-->
+        <!--<img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">-->
+    <!--</a>-->
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../../index.html">
+    <img class="logo" src="../../_static/img/logo.jpg" alt="Logo"/>
+    
+    <h1 class="logo logo-name">Zmei Generator</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+<h3>Navigation</h3>
+<p class="caption"><span class="caption-text">Contents:</span></p>
+<ul class="current">
+<li class="toctree-l1"><a class="reference internal" href="../../intro.html">Introduction</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../col.html">Applications</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../col_extras.html">App annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../models.html">Models</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../model_extras.html">Model annotations</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../pages.html">Pages</a></li>
+<li class="toctree-l1 current"><a class="reference internal" href="../../page_extras.html">Page annotations</a><ul class="current">
+<li class="toctree-l2"><a class="reference internal" href="1_auth.html">&#64;auth</a></li>
+<li class="toctree-l2 current"><a class="current reference internal" href="#">&#64;menu</a></li>
+<li class="toctree-l2"><a class="reference internal" href="3_error.html">&#64;error(xxx)</a></li>
+<li class="toctree-l2"><a class="reference internal" href="4_html.html">&#64;html and &#64;markdown</a></li>
+<li class="toctree-l2"><a class="reference internal" href="6_post.html">&#64;post and &#64;get</a></li>
+</ul>
+</li>
+<li class="toctree-l1"><a class="reference internal" href="../../crud.html">Crud</a></li>
+<li class="toctree-l1"><a class="reference internal" href="../../syntax.html">Syntax</a></li>
+</ul>
+
+
+<hr />
+<ul>
+    
+    <li class="toctree-l1"><a href="/generator/blog.html">Articles</a></li>
+    
+</ul>
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../../index.html">Documentation overview</a><ul>
+  <li><a href="../../page_extras.html">Page annotations</a><ul>
+      <li>Previous: <a href="1_auth.html" title="previous chapter">&#64;auth</a></li>
+      <li>Next: <a href="3_error.html" title="next chapter">&#64;error(xxx)</a></li>
+  </ul></li>
+  </ul></li>
+</ul>
+</div>
+<div id="searchbox" style="display: none" role="search">
+  <h3>Quick search</h3>
+    <div class="searchformwrapper">
+    <form class="search" action="../../search.html" method="get">
+      <input type="text" name="q" />
+      <input type="submit" value="Go" />
+      <input type="hidden" name="check_keywords" value="yes" />
+      <input type="hidden" name="area" value="default" />
+    </form>
+    </div>
+</div>
+<script type="text/javascript">$('#searchbox').show(0);</script>
+
+
+
+
+
+
+
+
+  <h3><a href="../../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="../../blog/3_django_i18n.html">01 December - Full i18n of Django application (urls, models, templates, code)</a></li>
+    
+      <li><a href="../../blog/2_Zmei_quick_start_3.html">30 November - Deploy Django application to a public url in 60 seconds</a></li>
+    
+      <li><a href="../../blog/1_Zmei_quick_start_2.html">27 November - Django REST & Admin with a nice theme in 60 seconds</a></li>
+    
+      <li><a href="../../blog/0_Zmei_quick_start.html">24 November - Django application in 60 seconds</a></li>
+    
+  </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Alex Rudakov.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../../_sources/page/extras/2_menu.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-116654219-4']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>

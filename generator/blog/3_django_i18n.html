@@ -1,0 +1,564 @@
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+  "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    <title>Full i18n of Django application (urls, models, templates, code) &#8212; Zmei Generator 2.0 documentation</title>
+    <link rel="stylesheet" href="../_static/alabaster.css" type="text/css" />
+    <link rel="stylesheet" href="../_static/pygments.css" type="text/css" />
+    <script type="text/javascript" id="documentation_options" data-url_root="../" src="../_static/documentation_options.js"></script>
+    <script type="text/javascript" src="../_static/jquery.js"></script>
+    <script type="text/javascript" src="../_static/underscore.js"></script>
+    <script type="text/javascript" src="../_static/doctools.js"></script>
+    <link rel="index" title="Index" href="../genindex.html" />
+    <link rel="search" title="Search" href="../search.html" />
+  
+   
+  <link rel="stylesheet" href="../_static/custom.css" type="text/css" />
+  
+  
+  <meta name="viewport" content="width=device-width, initial-scale=0.9, maximum-scale=0.9" />
+
+  
+  <link rel="alternate" type="application/atom+xml"  href="../blog/atom.xml" title="Zmei generator's blog">
+  
+  
+  <style type="text/css">
+    ul.ablog-archive {list-style: none; overflow: auto; margin-left: 0px}
+    ul.ablog-archive li {float: left; margin-right: 5px; font-size: 80%}
+    ul.postlist a {font-style: italic;}
+    ul.postlist-style-disc {list-style-type: disc;}
+    ul.postlist-style-none {list-style-type: none;}
+    ul.postlist-style-circle {list-style-type: circle;}
+  </style>
+
+  </head><body>
+  
+
+    <div class="document">
+
+      <div class="documentwrapper">
+        <div class="bodywrapper">
+              <div class="related top">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+
+          <div class="body" role="main">
+            
+  <div class="section" id="full-i18n-of-django-application-urls-models-templates-code">
+<span id="tutor-i18n"></span><h1>Full i18n of Django application (urls, models, templates, code)<a class="headerlink" href="#full-i18n-of-django-application-urls-models-templates-code" title="Permalink to this headline">¶</a></h1>
+<p>This tutorial we see how to generate proper multilanguage configuration for
+Django application, including:</p>
+<ul class="simple">
+<li>Template text translation</li>
+<li>Strings in python code translation</li>
+<li>Model fields translation</li>
+<li>Model field labels translation</li>
+<li>Url translation</li>
+</ul>
+<p>And all of this with just a few commands.</p>
+<div class="section" id="preparation">
+<h2>Preparation<a class="headerlink" href="#preparation" title="Permalink to this headline">¶</a></h2>
+<p>Django uses gettext for i18n. You should figure out how to set it up on your system.
+For me (macos) it was:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="n">brew</span> <span class="n">install</span> <span class="n">gettext</span>
+<span class="n">brew</span> <span class="n">link</span> <span class="n">gettext</span> <span class="o">--</span><span class="n">force</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="video-with-explanations">
+<h2>Video with explanations<a class="headerlink" href="#video-with-explanations" title="Permalink to this headline">¶</a></h2>
+<p>Below is a text version of same tutorial. You can use it as a copy-paste source.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p class="last">All the small troubles you will see on video (to_string translation, menu not working etc …) are fixed. See above.</p>
+</div>
+<iframe width="660" height="415" src="https://www.youtube.com/embed/79byxRYdzgk" frameborder="0" allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe></div>
+<div class="section" id="starting-point">
+<h2>Starting point<a class="headerlink" href="#starting-point" title="Permalink to this headline">¶</a></h2>
+<p>For experiments I pick this col file:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@suit</span>
+
+<span class="p">[</span><span class="n">index</span><span class="p">:</span> <span class="o">/</span><span class="p">]</span>
+<span class="nd">@markdown</span> <span class="p">{</span>
+    <span class="c1"># My library</span>
+<span class="p">}</span>
+<span class="nd">@crud</span><span class="o">.</span><span class="n">books</span><span class="p">(</span>
+    <span class="c1">#book</span>
+    <span class="n">list_fields</span><span class="p">:</span> <span class="o">*</span><span class="p">,</span> <span class="o">^</span><span class="n">description</span>
+<span class="p">)</span>
+<span class="nd">@crud</span><span class="o">.</span><span class="n">shelves</span><span class="p">(</span><span class="c1">#shelf)</span>
+
+<span class="c1">#shelf: Shelf/Shelves</span>
+<span class="o">---------</span>
+<span class="o">=</span><span class="s2">&quot;Shelf nr </span><span class="si">{me.number}</span><span class="s2"> at </span><span class="si">{me.location}</span><span class="s2">&quot;</span>
+<span class="n">location</span>
+<span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+
+<span class="nd">@admin</span>
+
+<span class="c1">#book: Book/Books</span>
+<span class="o">--------</span>
+<span class="o">=</span><span class="n">title</span>
+<span class="n">description</span><span class="p">:</span> <span class="n">html</span>
+<span class="n">year</span><span class="p">:</span> <span class="nb">int</span>
+<span class="n">author</span>
+<span class="n">shelf</span><span class="p">:</span> <span class="n">one</span><span class="p">(</span><span class="c1">#shelf -&gt; books)</span>
+
+<span class="nd">@admin</span>
+</pre></div>
+</div>
+<p>This is home a simple home library manager application.</p>
+<p>Interesting things are:</p>
+<ul class="simple">
+<li>“Shelf/Shelves” - verbose name of a model and a plural form</li>
+<li>“one(#shelf -&gt; books)” - relation</li>
+<li>=”Shelf nr {me.number} at {me.location}” - to string method</li>
+</ul>
+<p>Otherwise, it’s all concepts that we covered in previous tutorials.</p>
+</div>
+<div class="section" id="langs-annotation">
+<h2>&#64;langs annotation<a class="headerlink" href="#langs-annotation" title="Permalink to this headline">¶</a></h2>
+<p>Add lang annotation to specify that application is subject of i18n:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span><span class="nd">@suit</span>
+
+<span class="nd">@langs</span><span class="p">(</span><span class="n">en</span><span class="p">,</span> <span class="n">ru</span><span class="p">,</span> <span class="n">et</span><span class="p">)</span>
+
+<span class="p">[</span><span class="n">index</span><span class="p">:</span> <span class="o">/</span><span class="p">]</span>
+<span class="nd">@markdown</span> <span class="p">{</span>
+    <span class="c1"># My library</span>
+<span class="p">}</span>
+<span class="nd">@crud</span><span class="o">.</span><span class="n">books</span><span class="p">(</span>
+    <span class="c1">#book</span>
+    <span class="n">list_fields</span><span class="p">:</span> <span class="o">*</span><span class="p">,</span> <span class="o">^</span><span class="n">description</span>
+<span class="p">)</span>
+<span class="nd">@crud</span><span class="o">.</span><span class="n">shelves</span><span class="p">(</span><span class="c1">#shelf)</span>
+
+<span class="c1">#shelf: Shelf/Shelves</span>
+<span class="o">---------</span>
+<span class="o">=</span><span class="s2">&quot;Shelf nr </span><span class="si">{me.number}</span><span class="s2"> at </span><span class="si">{me.location}</span><span class="s2">&quot;</span>
+<span class="n">location</span>
+<span class="n">number</span><span class="p">:</span> <span class="nb">int</span>
+
+<span class="nd">@admin</span>
+
+<span class="c1">#book: Book/Books</span>
+<span class="o">--------</span>
+<span class="o">=</span><span class="n">title</span>
+<span class="n">description</span><span class="p">:</span> <span class="n">html</span>
+<span class="n">year</span><span class="p">:</span> <span class="nb">int</span>
+<span class="n">author</span>
+<span class="n">shelf</span><span class="p">:</span> <span class="n">one</span><span class="p">(</span><span class="c1">#shelf -&gt; books)</span>
+
+<span class="nd">@admin</span>
+</pre></div>
+</div>
+</div>
+<div class="section" id="translating-model-fields">
+<h2>Translating model fields<a class="headerlink" href="#translating-model-fields" title="Permalink to this headline">¶</a></h2>
+<p>Field translations are using django-modeltranslations. Add “$” to the beginning of field name to activate:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>@suit
+
+@langs(en, ru, et)
+
+[index: /]
+@markdown {
+    # My library
+}
+@crud.books(
+    #book
+    list_fields: *, ^description
+)
+@crud.shelves(#shelf)
+
+#shelf: Shelf/Shelves
+---------
+=&quot;Shelf nr {me.number} at {me.location}&quot;
+$location
+number: int
+
+@admin
+
+#book: Book/Books
+--------
+=$title
+$description: html
+year: int
+author
+shelf: one(#shelf -&gt; books)
+
+@admin
+</pre></div>
+</div>
+</div>
+<div class="section" id="url-i18n">
+<h2>Url i18n<a class="headerlink" href="#url-i18n" title="Permalink to this headline">¶</a></h2>
+<p>Just add “$” in the beginning of url pattern:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>@suit
+
+@langs(en, ru, et)
+
+[index: $/]
+@markdown {
+    # My library
+}
+@crud.books(
+    #book
+    list_fields: *, ^description
+)
+@crud.shelves(#shelf)
+
+#shelf: Shelf/Shelves
+---------
+=&quot;Shelf nr {me.number} at {me.location}&quot;
+$location
+number: int
+
+@admin
+
+#book: Book/Books
+--------
+=$title
+$description: html
+year: int
+author
+shelf: one(#shelf -&gt; books)
+
+@admin
+</pre></div>
+</div>
+</div>
+<div class="section" id="language-switcher">
+<h2>Language switcher<a class="headerlink" href="#language-switcher" title="Permalink to this headline">¶</a></h2>
+<p>It’s not the best way to implement this, but add a menu:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>@suit
+
+@langs(en, ru, et)
+
+[index: $/]
+@menu.main(
+    &quot;Русский&quot;: &quot;/ru/&quot;,
+    &quot;Eesti&quot;: &quot;/et/&quot;,
+    &quot;English&quot;: &quot;/en/&quot;
+)
+@markdown {
+    # My library
+}
+@crud.books(
+    #book
+    list_fields: *, ^description
+)
+@crud.shelves(#shelf)
+
+#shelf: Shelf/Shelves
+---------
+=&quot;Shelf nr {me.number} at {me.location}&quot;
+$location
+number: int
+
+@admin
+
+#book: Book/Books
+--------
+=$title
+$description: html
+year: int
+author
+shelf: one(#shelf -&gt; books)
+
+@admin
+</pre></div>
+</div>
+</div>
+<div class="section" id="generate-translations">
+<h2>Generate translations<a class="headerlink" href="#generate-translations" title="Permalink to this headline">¶</a></h2>
+<p>Collect messages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python manage.py makemessages --all
+</pre></div>
+</div>
+<p>Translate all messages in locale/[lang_name]/LC_LOCALE/<a href="#id1"><span class="problematic" id="id2">*</span></a>.po</p>
+<p>Compile messages:</p>
+<div class="highlight-default notranslate"><div class="highlight"><pre><span></span>$ python manage.py compilemessages
+</pre></div>
+</div>
+<p>That’s it. The application is fully translated</p>
+</div>
+</div>
+
+  <div class="section">
+  
+    
+
+
+<div class="section">
+  <span style="float: left;">
+  
+  Previous: 
+  <a href="2_Zmei_quick_start_3.html">
+    
+    Deploy Django application to a public url in 60 seconds
+  </a>
+  
+  </span>
+  <span>&nbsp;</span>
+  <span style="float: right;">
+  
+</div>
+
+  
+  
+    <div class="section">
+    <h2>Comments</h2>
+    <div id="disqus_thread"></div>
+    <script type="text/javascript">
+        var disqus_shortname = 'zmei-blog';
+        var disqus_identifier = '/blog/3_django_i18n/';
+        var disqus_title = 'Full i18n of Django application (urls, models, templates, code)';
+        var disqus_url = 'https://zmei-framework.com/generator/blog/3_django_i18n';
+
+        (function() {
+            var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
+            dsq.src = '//' + disqus_shortname + '.disqus.com/embed.js';
+            (document.getElementsByTagName('head')[0] || document.getElementsByTagName('body')[0]).appendChild(dsq);
+        })();
+    </script>
+    <noscript>Please enable JavaScript to view the <a href="http://disqus.com/?ref_noscript">comments powered by Disqus.</a></noscript>
+    <a href="http://disqus.com" class="dsq-brlink">comments powered by <span class="logo-disqus">Disqus</span></a>
+    </div>
+  
+  </div>
+
+          </div>
+              <div class="related bottom">
+                &nbsp;
+  <nav id="rellinks">
+    <ul>
+    </ul>
+  </nav>
+              </div>
+          
+        </div>
+      </div>
+    <!--<a href="https://github.com///blob/master/blog/3_django_i18n.rst" class="github" target="_blank">-->
+        <!--<img style="position: fixed; top: 0; right: 0; border: 0;" src="https://s3.amazonaws.com/github/ribbons/forkme_right_gray_6d6d6d.png" alt="Fork me on GitHub">-->
+    <!--</a>-->
+
+      <div class="sphinxsidebar" role="navigation" aria-label="main navigation">
+        <div class="sphinxsidebarwrapper">
+<p class="logo">
+  <a href="../index.html">
+    <img class="logo" src="../_static/img/logo.jpg" alt="Logo"/>
+    
+    <h1 class="logo logo-name">Zmei Generator</h1>
+    
+  </a>
+</p>
+
+
+
+
+
+
+
+
+
+  
+  
+  <h2>
+  
+  
+    01 December 2018
+  
+  </h2>
+
+  <ul>
+    
+
+  
+  <li id="author"><span>Author:</span>
+    
+      
+      <a href="author/alex-rudakov.html">Alex Rudakov</a>
+      
+    </li>
+  
+
+  
+
+  
+
+  
+  <li id="category"><span>Category:</span>
+    
+      
+      <a href="category/tutorial.html">Tutorial</a>
+      
+    </li>
+  
+
+  
+  <li id="tags"><span>Tags:
+      </span>
+    
+      
+      <a href="tag/i18n.html">i18n</a>
+      
+    
+      
+      <a href="tag/models.html">models</a>
+      
+    
+      
+      <a href="tag/video.html">video</a>
+      
+    </li>
+  
+  
+  <li id="comments">
+    <script type="text/javascript">
+    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
+    var disqus_shortname = 'zmei-blog'; // required: replace example with your forum shortname
+
+    /* * * DON'T EDIT BELOW THIS LINE * * */
+    (function () {
+    var s = document.createElement('script'); s.async = true;
+    s.type = 'text/javascript';
+    s.src = '//' + disqus_shortname + '.disqus.com/count.js';
+    (document.getElementsByTagName('HEAD')[0] || document.getElementsByTagName('BODY')[0]).appendChild(s);
+    }());
+    </script>
+    
+    <a href="#disqus_thread" data-disqus-identifier="/blog/3_django_i18n/"> Comments</a>
+  </li>
+  
+  </ul>
+
+
+<div class="relations">
+<h3>Related Topics</h3>
+<ul>
+  <li><a href="../index.html">Documentation overview</a><ul>
+  </ul></li>
+</ul>
+</div>
+  <h3><a href="tag.html">Tags</a></h3>
+  <style type="text/css">
+    ul.ablog-cloud {list-style: none; overflow: auto;}
+    ul.ablog-cloud li {float: left; height: 20pt; line-height: 18pt; margin-right: 5px;}
+    ul.ablog-cloud a {text-decoration: none; vertical-align: middle;}
+    li.ablog-cloud-1{font-size: 80%;}
+    li.ablog-cloud-2{font-size: 95%;}
+    li.ablog-cloud-3{font-size: 110%;}
+    li.ablog-cloud-4{font-size: 125%;}
+    li.ablog-cloud-5{font-size: 140%;}
+  </style>
+  <ul class="ablog-cloud">
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="tag/60sec.html">60sec</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/admin.html">admin</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/deploy.html">deploy</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/i18n.html">i18n</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-5">
+        <a href="tag/intro.html">intro</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/models.html">models</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/rest.html">rest</a></li>
+      
+    
+      
+      <li class="ablog-cloud ablog-cloud-1">
+        <a href="tag/video.html">video</a></li>
+      
+    
+  </ul>
+
+  <h3><a href="../blog.html">Recent Posts</a></h3>
+  <ul>
+    
+    
+      <li><a href="2_Zmei_quick_start_3.html">30 November - Deploy Django application to a public url in 60 seconds</a></li>
+    
+      <li><a href="1_Zmei_quick_start_2.html">27 November - Django REST & Admin with a nice theme in 60 seconds</a></li>
+    
+      <li><a href="0_Zmei_quick_start.html">24 November - Django application in 60 seconds</a></li>
+    
+  </ul>
+
+  <h3><a href="archive.html">Archives</a></h3>
+  <ul>
+  
+    
+    <li><a href="2018.html">2018 (4)</a></li>
+    
+  
+  </ul>
+
+        </div>
+      </div>
+      <div class="clearer"></div>
+    </div>
+    <div class="footer">
+      &copy;2018, Alex Rudakov.
+      
+      |
+      Powered by <a href="http://sphinx-doc.org/">Sphinx 1.8.2</a>
+      &amp; <a href="https://github.com/bitprophet/alabaster">Alabaster 0.7.12</a>
+      
+      |
+      <a href="../_sources/blog/3_django_i18n.rst.txt"
+          rel="nofollow">Page source</a>
+    </div>
+
+    
+
+    
+    <script type="text/javascript">
+
+      var _gaq = _gaq || [];
+      _gaq.push(['_setAccount', 'UA-116654219-4']);
+      _gaq.push(['_setDomainName', 'none']);
+      _gaq.push(['_setAllowLinker', true]);
+      _gaq.push(['_trackPageview']);
+
+      (function() {
+        var ga = document.createElement('script'); ga.type = 'text/javascript'; ga.async = true;
+        ga.src = ('https:' == document.location.protocol ? 'https://ssl' : 'http://www') + '.google-analytics.com/ga.js';
+        var s = document.getElementsByTagName('script')[0]; s.parentNode.insertBefore(ga, s);
+      })();
+
+    </script>
+    
+  </body>
+</html>
